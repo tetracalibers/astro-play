@@ -2,6 +2,7 @@
 import ArticleTitle from "@/components/content/article-title.astro"
 import SectionTitle from "@/components/content/section-title.astro"
 import Paragraph from "@/components/content/paragraph.astro"
+import Ulist from "@/components/content/ulist.astro"
 
 export async function getStaticPaths() {
   const path = await import("path")
@@ -30,7 +31,7 @@ const { info, Content } = Astro.props
   </head>
   <body>
     <ArticleTitle text={info.title} />
-    <Content components={{ h2: SectionTitle, p: Paragraph }} />
+    <Content components={{ h2: SectionTitle, p: Paragraph, ul: Ulist }} />
     <style>
       body {
         font-family: "木漏れ日ゴシックP";
