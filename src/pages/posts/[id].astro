@@ -1,4 +1,5 @@
 ---
+import HeroImage from "@/components/content/hero-image.astro"
 import ArticleTitle from "@/components/content/article-title.astro"
 import SectionTitle from "@/components/content/section-title.astro"
 import Paragraph from "@/components/content/paragraph.astro"
@@ -30,8 +31,13 @@ const { info, Content } = Astro.props
     <title>{info.title}</title>
   </head>
   <body>
-    <ArticleTitle text={info.title} />
-    <Content components={{ h2: SectionTitle, p: Paragraph, ul: Ulist }} />
+    <main>
+      <header>
+        <ArticleTitle text={info.title} />
+        <HeroImage src={info.thumbnail} alt="" />
+      </header>
+      <Content components={{ h2: SectionTitle, p: Paragraph, ul: Ulist }} />
+    </main>
     <style>
       body {
         font-family: "木漏れ日ゴシックP";
