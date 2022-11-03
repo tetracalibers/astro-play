@@ -1,34 +1,25 @@
 ---
-import Article from "@/components/content/article.astro"
-import { parse } from "node-html-parser"
+import ArticleTitle from "@/components/content/article-title.astro"
+import SectionTitle from "@/components/content/section-title.astro"
+import Paragraph from "@/components/content/paragraph.astro"
 
-/* ルーティング ------------------------------------- */
 export async function getStaticPaths() {
   const path = await import("path")
-  const articles = await Astro.glob("../../articles/*.md")
+  const articles = await Astro.glob("../../articles/*.mdx")
   return articles.map(a => {
     return {
       params: {
-        id: path.basename(a.file, ".md"),
+        id: path.basename(a.file, ".mdx"),
       },
       props: {
         info: a.frontmatter,
-        getHtml: a.compiledContent,
+        Content: a.Content,
       },
     }
   })
 }
 
-/* ページ ---------------------------------------- */
-
-const { info, getHtml } = Astro.props
-
-const html = await getHtml()
-const elems = parse(html).querySelectorAll("*")
-const blocks = Array.from(elems).map(node => ({
-  tag: node.rawTagName,
-  content: node.structuredText,
-}))
+const { info, Content } = Astro.props
 ---
 
 <html>
@@ -38,7 +29,8 @@ const blocks = Array.from(elems).map(node => ({
     <title>{info.title}</title>
   </head>
   <body>
-    <Article title={info.title} blocks={blocks} />
+    <ArticleTitle text={info.title} />
+    <Content components={{ h2: SectionTitle, p: Paragraph }} />
     <style>
       body {
         font-family: "木漏れ日ゴシックP";

@@ -3,10 +3,10 @@ interface Props {
   text: string
 }
 
-const title = Astro.props.text
+const { text, ...props } = Astro.props
 ---
 
-<h1>{title}</h1>
+<h1 {...props}>{text}</h1>
 
 <style>
   h1 {

@@ -1,0 +1,13 @@
+---
+const props = Astro.props
+---
+
+<mark {...props}>
+  <slot />
+</mark>
+
+<style>
+  mark {
+    background: linear-gradient(transparent 50%, #ffff7c 50%);
+  }
+</style>
