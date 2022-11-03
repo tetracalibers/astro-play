@@ -1,5 +1,6 @@
 ---
-import ArticleTitle from "@/components/content/article-title.astro"
+import Article from "@/components/content/article.astro"
+import { parse } from "node-html-parser"
 
 /* ルーティング ------------------------------------- */
 export async function getStaticPaths() {
@@ -12,8 +13,7 @@ export async function getStaticPaths() {
       },
       props: {
         info: a.frontmatter,
-        getHeadings: a.getHeadings,
-        Content: a.Content,
+        getHtml: a.compiledContent,
       },
     }
   })
@@ -21,10 +21,14 @@ export async function getStaticPaths() {
 
 /* ページ ---------------------------------------- */
 
-const { info, getHeadings, Content } = Astro.props
+const { info, getHtml } = Astro.props
 
-const subtitles = await getHeadings()
-console.dir(subtitles)
+const html = await getHtml()
+const elems = parse(html).querySelectorAll("*")
+const blocks = Array.from(elems).map(node => ({
+  tag: node.rawTagName,
+  content: node.structuredText,
+}))
 ---
 
 <html>
@@ -34,14 +38,11 @@ console.dir(subtitles)
     <title>{info.title}</title>
   </head>
   <body>
-    <ArticleTitle text={info.title} />
-    <Content />
-    <p>作成日: {info.created_at}</p>
+    <Article title={info.title} blocks={blocks} />
+    <style>
+      body {
+        font-family: "木漏れ日ゴシックP";
+      }
+    </style>
   </body>
 </html>
-
-<style>
-  body {
-    font-family: "木漏れ日ゴシックP";
-  }
-</style>

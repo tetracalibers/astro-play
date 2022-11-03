@@ -1,0 +1,39 @@
+---
+import ArticleTitle from "@/components/content/article-title.astro"
+
+interface Props {
+  title: string
+  blocks: {
+    tag: string
+    content: string
+  }[]
+}
+
+const { title, blocks } = Astro.props
+---
+
+<article>
+  <ArticleTitle text={title} />
+  {blocks.map(b => <b.tag>{b.content}</b.tag>)}
+</article>
+
+<style>
+  h2 {
+    margin: 60px 0 30px 0;
+    padding: 1rem 0;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    font-size: 1.25rem;
+  }
+
+  p {
+    margin: 30px 0;
+    line-height: 1.9;
+    text-align: justify;
+  }
+
+  /* 記事タイトルの真下の要素は上マージンを取り消し */
+  article > *:nth-child(2) {
+    margin-top: 0;
+  }
+</style>
