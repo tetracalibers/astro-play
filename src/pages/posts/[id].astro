@@ -1,4 +1,6 @@
 ---
+import ArticleTitle from "@/components/content/article-title.astro"
+
 /* ルーティング ------------------------------------- */
 export async function getStaticPaths() {
   const path = await import("path")
@@ -32,8 +34,14 @@ console.dir(subtitles)
     <title>{info.title}</title>
   </head>
   <body>
-    <h1>{info.title} by {info.author}</h1>
+    <ArticleTitle text={info.title} />
     <Content />
     <p>作成日: {info.created_at}</p>
   </body>
 </html>
+
+<style>
+  body {
+    font-family: "木漏れ日ゴシックP";
+  }
+</style>

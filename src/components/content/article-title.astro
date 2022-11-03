@@ -1,0 +1,17 @@
+---
+interface Props {
+  text: string
+}
+
+const title = Astro.props.text
+---
+
+<h1>{title}</h1>
+
+<style>
+  h1 {
+    margin: 0 0 20px 0;
+    font-size: 1.875rem;
+    line-height: 1.5;
+  }
+</style>
