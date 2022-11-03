@@ -1,0 +1,39 @@
+---
+/* ルーティング ------------------------------------- */
+export async function getStaticPaths() {
+  const path = await import("path")
+  const articles = await Astro.glob("../../articles/*.md")
+  return articles.map(a => {
+    return {
+      params: {
+        id: path.basename(a.file, ".md"),
+      },
+      props: {
+        info: a.frontmatter,
+        getHeadings: a.getHeadings,
+        Content: a.Content,
+      },
+    }
+  })
+}
+
+/* ページ ---------------------------------------- */
+
+const { info, getHeadings, Content } = Astro.props
+
+const subtitles = await getHeadings()
+console.dir(subtitles)
+---
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{info.title}</title>
+  </head>
+  <body>
+    <h1>{info.title} by {info.author}</h1>
+    <Content />
+    <p>作成日: {info.created_at}</p>
+  </body>
+</html>
