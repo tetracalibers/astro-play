@@ -1,16 +1,8 @@
 ---
+import FitImage from "@/components/fit-image.astro"
 const props = Astro.props
 ---
 
 <div>
-  <img {...props} />
+  <FitImage {...props} />
 </div>
-
-<style>
-  /* レスポンシブイメージと画像下スペース防止 */
-  img {
-    max-width: 100%;
-    height: auto;
-    vertical-align: bottom; /* 画像下のスペースを消す */
-  }
-</style>
